@@ -4,9 +4,10 @@ export const MenuNgang = () => {
     return (
         <Router >
             <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-            <Link to="/click-me">Click me</Link>
-            <Link to="/news">News</Link>
+            <a href="/about">About</a>
+            <a href="/click-me">Click me</a>
+            <a href="/news">News</a>
+            <a href="/thanh-pho">Citys</a>
         </Router >
     )
 };
