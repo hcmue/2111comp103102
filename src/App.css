@@ -1,3 +1,11 @@
+.mautin {
+  border: 1px solid blue;
+  padding: 7px;
+  margin: 5px;
+  width: 250px;
+  display: inline-block;
+}
+
 .App {
   text-align: center;
 }

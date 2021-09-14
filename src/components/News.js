@@ -1,9 +1,10 @@
 import React from 'react';
+import '../App.css';
 
 const NewsDetail = (props) => {
     return (
-        <div>
-            <h3>{props.tieuDe}</h3>
+        <div className="mautin">
+            <h3 style={{ color: 'red' }}>{props.tieuDe}</h3>
             <div>{props.noiDung}</div>
         </div>
     )
