@@ -11,7 +11,20 @@ export const Counter = () => {
         return () => {
             console.log('Clean up');
         };
-    });//no dependcies
+    });//no dependencies
+
+    useEffect(() => {
+        console.log(`In load page, Counter is ${counter}`);
+
+        //Clean up function
+        return () => {
+            console.log('Clean up 2');
+        };
+    }, []); //dependcies, empty array: once time (load page)
+
+    useEffect(() => {
+        console.log('Call when change counter')
+    }, [counter]);
 
     return (
         <>
