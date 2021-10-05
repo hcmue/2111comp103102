@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { MyContext } from '../context/MyContext';
 
 // Arrow function components
 export const Counter = () => {
     const [counter, setCounter] = useState(0);
+    const { count, setCount } = useContext(MyContext);
 
     useEffect(() => {
         console.log(`Counter is ${counter}`);
@@ -20,15 +22,17 @@ export const Counter = () => {
         return () => {
             console.log('Clean up 2');
         };
-    }, []); //dependcies, empty array: once time (load page)
+    }, []); //dependencies, empty array: once time (load page)
 
     useEffect(() => {
-        console.log('Call when change counter')
+        console.log('Call when change counter');
+        setCount(counter);
     }, [counter]);
 
     return (
         <>
             <h2>COUNTER: {counter}</h2>
+            <h3>Count from MyContext: {count}</h3>
             <button onClick={() => setCounter(counter + 1)}>+</button>
             <button onClick={() => setCounter(counter - 1)}>-</button>
         </>
