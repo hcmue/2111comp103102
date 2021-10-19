@@ -4,6 +4,19 @@ import json
 from pathlib import Path
 import os
 from .models.Todo import TodoItem
+import logging
+
+#Cach 1:
+#logging.basicConfig(format='%(asctime)s - %(levelname)s - %(filename)s - %(message)s', level=logging.INFO)
+
+# Cach 2: Luu xuong file
+logger = logging.getLogger()
+f_handler = logging.FileHandler('file.log')
+f_handler.setLevel(logging.DEBUG)
+f_format = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+f_handler.setFormatter(f_format)
+logger.addHandler(f_handler)
+
 
 
 app = FastAPI()
@@ -38,6 +51,7 @@ todos = [
 
 @app.get("/", tags=["root"])
 async def read_root() -> dict:
+    logging.error('This is a debug message')
     return {"message": "Welcome to your todo list."}
 
 
@@ -57,10 +71,13 @@ my_path_file = os.path.join(folder, "todo.json")
 
 
 def read_todo_data():
-    with open(my_path_file, "r") as the_file:
-        data = the_file.read()
+    try:
+        with open(my_path_file, "r") as the_file:
+            data = the_file.read()
 
-    return json.loads(data)
+        return json.loads(data)
+    except Exception as e:
+        logging.error(e)
 
 
 @app.post("/todo", tags=["todos"])
