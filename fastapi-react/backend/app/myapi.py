@@ -1,12 +1,13 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 import json
 from pathlib import Path
 import os
 from .models.Todo import TodoItem
 import logging
+import shutil
 
-#Cach 1:
+# Cach 1:
 #logging.basicConfig(format='%(asctime)s - %(levelname)s - %(filename)s - %(message)s', level=logging.INFO)
 
 # Cach 2: Luu xuong file
@@ -16,7 +17,6 @@ f_handler.setLevel(logging.DEBUG)
 f_format = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 f_handler.setFormatter(f_format)
 logger.addHandler(f_handler)
-
 
 
 app = FastAPI()
@@ -31,7 +31,7 @@ origins = [
 app.add_middleware(
     CORSMiddleware,
     # allow_origins=origins,
-    allow_origins=["*"], # cho tất cả các host
+    allow_origins=["*"],  # cho tất cả các host
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"]
@@ -64,7 +64,7 @@ async def get_todos() -> dict:
         print(data)
 
     data = json.loads(data)
-    return { "data": data }
+    return {"data": data}
 
 folder = Path(__file__).parent
 my_path_file = os.path.join(folder, "todo.json")
@@ -78,6 +78,14 @@ def read_todo_data():
         return json.loads(data)
     except Exception as e:
         logging.error(e)
+
+
+@app.post("/upload")
+def upload_single_file(file: UploadFile = File(...)):
+    my_path_file = os.path.join(folder.parent, file.filename)
+    with open(my_path_file, "wb") as my_file:
+        shutil.copyfileobj(file.file, my_file)
+    return {"filename": file.filename}
 
 
 @app.post("/todo", tags=["todos"])
@@ -97,7 +105,7 @@ async def add_todo(todo: TodoItem) -> dict:
         json.dump(data, the_file, indent=4)
 
     return {
-        "data": { "Todo added." }
+        "data": {"Todo added."}
     }
 
 
