@@ -17,6 +17,19 @@ def home():
     return {"message": "Hello"}
 
 
+@app.get("/users")
+def get_all_users():
+    session = MySession()
+    users = session.query(Schema.UserInfo).all()
+    items = []
+    for item in users:
+        items.append({
+            "username": item.username,
+            "password": item.password
+        })
+    return {"data": items}
+
+
 @app.post("/users")
 def create_user(model: MyModel.User):
     print(model, model.username)
