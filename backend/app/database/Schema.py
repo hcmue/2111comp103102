@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, String, Column, TIMESTAMP, func, Float, ForeignKey
+from sqlalchemy import Integer, String, Column, TIMESTAMP, func, Float, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 from .Database import Base
 
@@ -8,6 +8,7 @@ class UserInfo(Base):
     Id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String(50), nullable=False)
     password = Column(String(250), nullable=False)
+    active = Column(Boolean, nullable=False, default=True)
     created_at = Column(TIMESTAMP, nullable=False, server_default=func.now())
 
 
