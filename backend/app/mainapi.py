@@ -45,3 +45,49 @@ def create_user(model: MyModel.User):
     finally:
         session.close()
     return {"data": myuser}
+
+
+@app.get("/categories")
+def get_all_categories():
+    session = MySession()
+    users = session.query(Schema.Category).all()
+    items = []
+    for item in users:
+        items.append({
+            "id": item.Id,
+            "name": item.category_name,
+            "products": item.products
+        })
+    return {"data": items}
+
+
+@app.get("/products")
+def get_products():
+    session = MySession()
+    users = session.query(Schema.Product).all()
+    items = []
+    for item in users:
+        items.append({
+            "id": item.Id,
+            "name": item.product_name,
+            "price": item.price,
+            "category": item.category
+        })
+    return {"data": items}
+
+
+@app.get("/products/query")
+def get_products_filter(price_from: float, price_to: float):
+    session = MySession()
+    users = session.query(Schema.Product)\
+        .filter(Schema.Product.price >= price_from)\
+        .filter(Schema.Product.price <= price_to).all()
+    items = []
+    for item in users:
+        items.append({
+            "id": item.Id,
+            "name": item.product_name,
+            "price": item.price,
+            "category": item.category
+        })
+    return {"data": items}
