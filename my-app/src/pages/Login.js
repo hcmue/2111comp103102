@@ -8,6 +8,11 @@ export const Login = () => {
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
 
+    //đối với API yêu cầu có token
+    const myconfig = {
+        headers: { Authorization: 'Bearer aaaaaa' }
+    };
+
     const handleLogin = (e) => {
         e.preventDefault();
         axios.post(process.env.REACT_APP_API + '/authenticate', {
