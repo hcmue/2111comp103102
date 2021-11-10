@@ -7,11 +7,21 @@ from .database import Schema
 from .database.Database import engine, MySession
 from .Models import MyModel
 from passlib.context import CryptContext
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI(
     title="My FastAPI",
     description="Demo FastAPI + SQL Alchemy ORM MySQL",
     version="1.0.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # DInh nghia schema cho database
@@ -100,7 +110,6 @@ def authenticate(model: MyModel.User):
     access_token = create_access_token(
         data={"sub": user.username}, expires_delta=access_token_expires
     )
-    print(access_token)
     return {"access_token": access_token, "token_type": "bearer"}
 
 
@@ -126,8 +135,8 @@ def get_all_users():
 def create_user(model: MyModel.User):
     print(model, model.username)
     myuser = Schema.UserInfo
-    myuser.username=model.username
-    myuser.password=model.password
+    myuser.username = model.username
+    myuser.password = model.password
     print(myuser)
     session = MySession()
     try:

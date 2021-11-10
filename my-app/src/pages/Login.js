@@ -4,14 +4,9 @@ import { useDispatch } from 'react-redux';
 import { actLoginSuccess } from '../actions/index';
 
 export const Login = () => {
+    const dispatch = useDispatch();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const dispatch = useDispatch();
-
-    //đối với API yêu cầu có token
-    const myconfig = {
-        headers: { Authorization: 'Bearer aaaaaa' }
-    };
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -20,10 +15,9 @@ export const Login = () => {
             password: password
         })
             .then(function (response) {
-                console.log(response);
-
+                alert("Đăng nhập thành công");
                 // trigger action để update state
-                dispatch(actLoginSuccess(username, username, response.access_token));
+                dispatch(actLoginSuccess(username, username, response.data.access_token));
             })
             .catch(function (error) {
                 console.log(error);

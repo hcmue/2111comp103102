@@ -2,18 +2,18 @@ import { axiosClient } from './axiosClient';
 import { authenHeader } from './authenticateApi';
 
 export const loaiApi = () => {
-    const endpoint = '/Loai';
-    const axiosClient = axiosClient();
+    const endpoint = '/categories';
+    const axios = axiosClient();
 
     const loaiApiObj = {
         getAll: () => {
-            return axiosClient.get(endpoint);
+            return axios.get(endpoint);
         },
         getById: (id) => {
-            return axiosClient.get(`${endpoint}/${id}`);
+            return axios.get(`${endpoint}/${id}`);
         },
         addItem: (item) => {
-            return axiosClient.post(`${endpoint}`, item, {
+            return axios.post(`${endpoint}`, item, {
                 headers: authenHeader()
             });
         }

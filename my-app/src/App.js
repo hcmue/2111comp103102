@@ -32,7 +32,7 @@ function App() {
         </header>
 
         <Routes>
-          <Route path="/login" component={Login} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </div >

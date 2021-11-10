@@ -14,13 +14,15 @@ export const authenReducer = (state = initAuthenState, action) => {
             state.token = action.payload.token;
             state.username = action.payload.username;
             state.fullname = action.payload.fullname;
-            break;
+            return state;
+
         case Types.UserService.LOGOUT:
             state.isLoggedIn = false;
             state.token = '';
             state.username = '';
             state.fullname = '';
-            break;
+            return state;
+
         default: return state;
     }
 };
